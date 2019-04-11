@@ -1,0 +1,59 @@
+<!-- need a button that will submit user input into database -->
+<div class="container semi-opaque px-5">
+    <header class="p-5 text-center">
+        <h1><i class="fas fa-newspaper"></i> Science News Scraper <i class="fas fa-atom"></i></h1>
+
+    </header>
+    <div class="row pb-5 d-flex justify-content-between">
+
+        <div id="articles" class='col-sm-12 col-md-6'>
+            <h3 class="text-center">Articles</h3>
+            <!-- Create for each loop to create the burgers -->
+            {{#each articles}}
+            <div class="burger d-flex justify-content-between">
+                {{ burger_name }}<button class="btn-burger btn btn-primary" data-id={{ id }}><i class="fas fa-utensils"></i> Eat
+                    It!</button>
+            </div>
+            {{/each}}
+
+        </div>
+
+    </div>
+
+    <div class="row pb-5 ">
+        <div class="col-12">
+            <form class="create-burger-form bg-white p-3">
+                <p>Add Note</p>
+                <div class="input-group mb-3">
+                    <input id="burger_name" type="text" class="form-control form-control-lg">
+                    <div class="input-group-append">
+                        <button id="submit" type="submit" class="btn btn-primary"><i class="fas fa-plus-square"></i> Add A
+                            Note</button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+</div>
+
+        <!-- Alert Modal -->
+        <div class="modal" id="alertModal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title text-dark">Alert!</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body text-danger">
+                        <p id="alert-msg">Please complete the new burger name form</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>

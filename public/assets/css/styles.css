@@ -1,0 +1,59 @@
+body {
+    background-image: url('../images/pexels-photo-1639565-min.jpeg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: bottom;
+    font-family: 'Crimson Text', serif;
+}
+
+html, body, .container {
+    height: 100%;
+}
+
+h1, h2, h3, h4, h5 {
+    font-family: 'Monoton', cursive;
+    color: yellow;
+}
+h1 {
+    font-size: 2.5em;
+}
+h3 { 
+    font-size: 1.5em;
+}
+/* .btn {
+    font-size: 1.2em;
+} */
+
+.semi-opaque {
+    background-color: rgba(54, 54, 54, 0.644);
+    /* opacity: .5; */
+    min-height: 100%;
+    height: 100%;
+    /* overflow: hidden; */
+}
+
+.burger {
+    /* box-sizing: border-box; */
+    /* width: 90%; */
+    background-color: #fff;
+    padding: 15px;
+    /* margin: 5px; */
+    margin: 0 auto 10px auto;
+    
+}
+
+.burger, form, .eaten {
+    border-radius: 10px;
+    box-shadow: 4px 6px rgba(0, 0, 0, 0.493);
+    font-size: 1.5em;
+}
+
+.eaten {
+    color: rgb(172, 172, 172);
+    /* width: 90%; */
+    background-color: #fff;
+    padding: 15px;
+    /* margin: 5px; */
+    margin: 0 auto 10px auto;
+}
