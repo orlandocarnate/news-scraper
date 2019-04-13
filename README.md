@@ -29,7 +29,7 @@ Create a News Scraper App that stores scraped articles into a MongoDB database u
 
 ### Deleting and Dropping
 * delete an entry with `db.[COLLECTION_NAME].remove()`
-* Empty a collection with `db.[COLLECTION_NAME].remove()`
+* Empty a collection with `db.[COLLECTION_NAME].remove({}, callback)`
 * Drop a collection with `db.[COLLECTION_NAME].drop()`
 * Drop a Database with `db.dropDatabase()`
 
