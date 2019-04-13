@@ -66,13 +66,23 @@ module.exports = function (app) {
         ).then(results => response.json(results)
         ).catch(err => res.json(err))
     });
-
-    // get single article
-    app.get("/api/article/:id", function (request, response) {
-        const id = request.params.id;
+    // UNsave article
+    app.put("/api/unsave/", function (request, response) {
+        // console.log(request.body);
+        db.Article.findOneAndUpdate(
+            { _id: request.body.id },
+            { saved: false }
+        ).then(results => response.json(results)
+        ).catch(err => res.json(err))
     });
 
-    // Update Article
+    // get single article's notes
+    app.get("/api/article/:id", function (request, response) {
+        const id = request.params.id;
+        console.log(id);
+    });
+
+    // Update Article Notes
     app.put("/api/update", function (request, response) {
         console.log(request.body);
     });
