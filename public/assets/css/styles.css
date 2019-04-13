@@ -1,10 +1,10 @@
 body {
-    background-image: url('../images/pexels-photo-1639565-min.jpeg');
+    background-image: url('../images/abstract-arrangement-art-457713_1280-min.jpg');
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;
     background-position: bottom;
-    font-family: 'Crimson Text', serif;
+    font-family: 'Merriweather', serif;
 }
 
 html, body, .container {
@@ -12,7 +12,7 @@ html, body, .container {
 }
 
 h1, h2, h3, h4, h5 {
-    font-family: 'Monoton', cursive;
+    font-family: 'Share Tech', sans-serif;
     color: yellow;
 }
 h1 {
@@ -33,27 +33,12 @@ h3 {
     /* overflow: hidden; */
 }
 
-.burger {
-    /* box-sizing: border-box; */
-    /* width: 90%; */
-    background-color: #fff;
-    padding: 15px;
-    /* margin: 5px; */
-    margin: 0 auto 10px auto;
-    
+.card {
+    width: 350px;
 }
 
-.burger, form, .eaten {
-    border-radius: 10px;
-    box-shadow: 4px 6px rgba(0, 0, 0, 0.493);
-    font-size: 1.5em;
-}
-
-.eaten {
-    color: rgb(172, 172, 172);
-    /* width: 90%; */
-    background-color: #fff;
-    padding: 15px;
-    /* margin: 5px; */
-    margin: 0 auto 10px auto;
+.card-img-top {
+    width:350px;
+    height: 240px;
+    object-fit: cover;
 }

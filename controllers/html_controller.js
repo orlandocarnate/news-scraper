@@ -2,7 +2,7 @@
 // var express = require("express");
 
 // get Article and Note models
-// var db = require("../models");
+var db = require("../models");
 
 // create router object
 // var router = express.Router();
@@ -11,7 +11,7 @@ module.exports = function (app) {
     const dummyData = [
         {
             'title': 'Test1',
-            'link': 'http://link1.com'
+            'link': 'http://link1.com',
         },
         {
             'title': 'Test2',
@@ -23,18 +23,30 @@ module.exports = function (app) {
         },
     ]
     app.get("/", function (req, res) {
-        let articlesHBObj = {
-            articles: dummyData
-        }
-        console.log(articlesHBObj);
-        res.render("index", articlesHBObj);
+        db.Article.find({})
+            .then(Articles => {
+                hbObj = {
+                    data: Articles
+                }
+                // console.log(hbObj);
+                res.render("index", hbObj)
+            })
+            .catch(err => res.json(err))        
     })
 
-    // Get all articles from DB
+    // Get saved articles from DB
     app.get("/saved-articles", function (req, res) {
-        // Load MongoDB data. If empty run the scraper
-        // From StackOverflow: When there are no matches find() returns [], while findOne() returns null. 
-        res.render("saved-articles", articlesHBObj);
+        db.Article.find({
+            saved: true
+        })
+            .then(Articles => {
+                hbObj = {
+                    data: Articles
+                }
+                // console.log(hbObj);
+                res.render("saved-articles", hbObj)
+            })
+            .catch(err => res.json(err))   
     });
 
     // END export

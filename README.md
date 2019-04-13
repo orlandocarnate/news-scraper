@@ -25,6 +25,18 @@ Create a News Scraper App that stores scraped articles into a MongoDB database u
     * Each note will have a delete button.
 9. Unsaving an article will delete all the notes associated with it.
 
+## MongoDB CRUD Functions
+
+### Deleting and Dropping
+* delete an entry with `db.[COLLECTION_NAME].remove()`
+* Empty a collection with `db.[COLLECTION_NAME].remove()`
+* Drop a collection with `db.[COLLECTION_NAME].drop()`
+* Drop a Database with `db.dropDatabase()`
+
 ## TODOs
 * '/' should pull data from MongoDB. If Empty it will scrape new articles
 * '/api/scrape' route will clear the MongoDB collection and pull new articles.
+
+## Programmer's Notes
+* ES6 Fat Arrow Function does not work with `$(document).on("click", ".item", ()=> {...})`
+

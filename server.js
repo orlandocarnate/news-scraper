@@ -1,14 +1,13 @@
 var express = require("express");
 var handlebars = require("express-handlebars");
 var mongoose = require("mongoose");
-
+var bodyParser = require('body-parser');
 var app = express();
 // if on Heroku or other server get port using process.env.PORT OR Port 3000 for localhost
 var PORT = process.env.PORT || 8080;
 
-
-var app = express(); // instantiate Express object.
-// app.use(routes); // use the routes from scraper_controller.js
+app.use(bodyParser.json()); // support json encoded bodies
+app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
 // get routes
 require("./controllers/api_controller")(app);
