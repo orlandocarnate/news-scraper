@@ -9,9 +9,10 @@ Create a News Scraper App that stores scraped articles into a MongoDB database u
 * [Express Handlebars](https://www.npmjs.com/package/express-handlebars) Node module as the view engine for Express
 * [Axios](https://www.npmjs.com/package/axios) Promise based HTTP client for the browser and node.js
 * [Cheerio](https://www.npmjs.com/package/cheerio) Parses markup and provides an API for traversing/manipulating the resulting data structure.
+* [body-parser](https://www.npmjs.com/package/body-parser) Parse incoming request bodies in a middleware before your handlers, available under the `req.body` property.
 
 ## Overview
-1. In the Nav Bar there will a Home, Saved Artcles, and Scrape New Articles.
+1. In the Nav Bar there will a Home, Saved Articles, and Scrape New Articles.
 2. When Home Page is loaded, the articles list will either be empty or shows the last scraped Articles from Articles Collection in the MongoDB database.
 3. To Rescrape articles, press the 'Scrape New Articles' button.
     * A Confirmation Modal will show the number of articles scraped.
@@ -39,4 +40,20 @@ Create a News Scraper App that stores scraped articles into a MongoDB database u
 
 ## Programmer's Notes
 * ES6 Fat Arrow Function does not work with `$(document).on("click", ".item", ()=> {...})`
+* [Anatomy of an HTTP Transaction in Node.js](https://nodejs.org/en/docs/guides/anatomy-of-an-http-transaction/)
+```
+const http = require('http');
 
+const server = http.createServer((request, response) => {
+  // magic happens here!
+});
+```
+    * We are NOT using `http` but **`Express`** to handle our http transactions and routing.
+* [Express](https://www.npmjs.com/package/express) refresher:
+    * Robust routing
+    * Focus on high performance
+    * Super-high test coverage
+    * HTTP helpers (redirection, caching, etc)
+    * View system supporting 14+ template engines
+    * Content negotiation
+    * Executable for generating applications quickly

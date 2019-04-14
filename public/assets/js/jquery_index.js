@@ -1,4 +1,5 @@
 $(document).ready(() => {
+  $("#spinner").hide();
 
   // data will be loaded from html_controller.js
 
@@ -14,7 +15,7 @@ $(document).ready(() => {
     // use post method to save article
     $.ajax("/api/save",
       {
-        type: "POST",
+        type: "PUT",
         data: articleId
       }).then(
         function () {
@@ -30,16 +31,35 @@ $(document).ready(() => {
   });
 
   // Scrape Modal
-  $(document).on("click", "#scrape-articles", function() {
-    $('#scrape-modal').modal('toggle')
+  $(document).on("click", "#scrape-articles", function () {
+    $('#scrape-modal').modal('toggle');
   });
 
-  // Scrape Articles
+  // Confirm Scrape Articles
   $(document).on("click", "#scrape-button", () => {
-    $.get("/api/scrape", () => {
-      $('#scrape-modal').modal('toggle');
-      location.reload()
-    })
+    // $.get("/api/scrape", () => {
+    //   $('#scrape-modal').modal('toggle');
+    //   location.reload()
+    // })
+
+    // Add Spinner
+    $('#scrape-articles').hide();
+    $('#spinner').show();
+    $('#scrape-modal').modal('toggle');
+    $.ajax({
+      type: "GET",
+      url: "/api/scrape",
+      success: function () {
+        $('#spinner').hide();
+        $('#scrape-articles').show();
+        location.reload();
+      },
+      error: function (response) {
+        //Handle error
+        $("#spinner").hide();
+
+      }
+    });
   });
 
   // Save Article

@@ -6,7 +6,7 @@
 
     </header>
     <!-- LIST ARTICLES -->
-    <div class="row pb-5 d-flex justify-content-between">
+    <div class="row pb-5">
 
         {{!-- <div class="card-group"> --}}
         {{#each data}}
@@ -18,13 +18,11 @@
                 </a>
             </div>
             <div class="card-footer">
-                <button class="add-note btn btn-primary" data-id={{ id }}>
+                <button class="add-note btn btn-primary mr-2" data-id={{ id }}>
                     <i class="fas fa-sticky-note"></i>
-                    Add/Edit Note
                 </button>
-                <button class="remove-article btn btn-warning" data-id={{ id }}>
+                <button class="remove-article btn btn-warning mr-2" data-id={{ id }}>
                     <i class="fas fa-trash"></i>
-                    Remove Article
                 </button>
             </div>
         </div>
@@ -48,10 +46,10 @@
                         <form>
                             <div class="form-group">
                                 <label>Note</label>
-                                <textarea id="sender-message" rows="4" class="form-control"
+                                <textarea id="note-message" rows="4" class="form-control"
                                     placeholder="Enter message here" required></textarea>
                             </div>
-                            <button id="contact-submit" class="btn btn-primary" type="submit">Add Note</button>
+                            <button id="submit-note" class="btn btn-primary" type="submit">Add Note</button>
                         </form>
                     </div>
                     <div class="modal-footer">

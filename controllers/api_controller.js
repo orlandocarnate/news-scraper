@@ -58,7 +58,7 @@ module.exports = function (app) {
     });
 
     // save article
-    app.post("/api/save/", function (request, response) {
+    app.put("/api/save/", function (request, response) {
         // console.log(request.body);
         db.Article.findOneAndUpdate(
             { _id: request.body.id },
@@ -77,15 +77,31 @@ module.exports = function (app) {
     });
 
     // get single article's notes
-    app.get("/api/article/:id", function (request, response) {
-        const id = request.params.id;
+    app.get("/api/notes", function (request, response) {
+        const id = request.body.id;
         console.log(id);
+        // find the article along with the associated notes
+        db.Article.findOne({ _id: id })
+            .populate("note")
+            .then(singleArticle => response.json(singleArticle))
+            .catch(err => res.json(err))
     });
 
-    // Update Article Notes
-    app.put("/api/update", function (request, response) {
+    // Add Article Notes
+    app.post("/api/addnote", function (request, response) {
         console.log(request.body);
-    });
+        // create Note and link with article id
+        db.Note.create(req.body)
+            .then(addNote => {
+                return db.Article.findOneAndUpdate(
+                    { _id: req.body.id },
+                    { note: dbNote._id },
+                    { new: true }
+                )
+            })
+            .then(singleArticle => response.json(singleArticle))
+            .catch(err => response.json(err));
+    })
 
     // Delete Article
     app.delete("/api/delete", function (request, response) {
