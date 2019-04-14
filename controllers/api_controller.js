@@ -88,19 +88,20 @@ module.exports = function (app) {
     });
 
     // Add Article Notes
-    app.post("/api/addnote", function (request, response) {
+    app.put("/api/addnote", function (request, response) {
         console.log(request.body);
         // create Note and link with article id
-        db.Note.create(req.body)
-            .then(addNote => {
-                return db.Article.findOneAndUpdate(
-                    { _id: req.body.id },
-                    { note: dbNote._id },
-                    { new: true }
-                )
-            })
-            .then(singleArticle => response.json(singleArticle))
-            .catch(err => response.json(err));
+        // db.Note.create(request.body)
+        //     .then(addNote => {
+        //         return db.Article.findOneAndUpdate(
+        //             { _id: req.body.id },
+        //             { note: dbNote._id },
+        //             { new: true }
+        //         )
+        //     })
+        //     .then(singleArticle => response.json(singleArticle))
+        //     .catch(err => response.json(err));
+
     })
 
     // Delete Article

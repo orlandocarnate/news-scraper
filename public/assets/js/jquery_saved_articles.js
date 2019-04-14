@@ -1,9 +1,12 @@
 $(document).ready(function () {
   $("#spinner").hide();
   $('#scrape-articles').hide();
-  // Get Single Article
+
+  // Get Single Article Notes
   $(document).on("click", ".add-note", function () {
+    const articleID = $(this).attr("data-id");
     $('#add-note-modal').modal('toggle');
+    $('#submit-note').attr("data-id", articleID);
   })
 
   // Unsave Article
@@ -31,6 +34,7 @@ $(document).ready(function () {
   $("#submit-note").on("click", function () { // Arrow Functions WILL NOT WORK!!!
     event.preventDefault(); // turn off default submit button behavior
     let noteObj = {
+      id: $(this).attr("data-id"),
       note: $("#note-message").val() // get selected Article ID
     } 
 
