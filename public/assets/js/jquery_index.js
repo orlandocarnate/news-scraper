@@ -38,22 +38,14 @@ $(document).ready(() => {
     $.ajax({
       type: "GET",
       url: "/api/scrape",
-      done: function () {
-      },
-      complete: function () {
+    })
+    .then( function () {
+      setTimeout(function () {
         $('#spinner').hide();
         $('#scrape-articles').show();
-        // location.reload();
-
-      },
-      error: function (response) {
-        //Handle error
-        $("#spinner").hide();
-
-      }
-    }).then(function () {
-      location.reload();
-    });
+        location.reload();
+      }, 1000)
+    })
   });
 
   // Show Clear Modal on Clear Scraped Articles link

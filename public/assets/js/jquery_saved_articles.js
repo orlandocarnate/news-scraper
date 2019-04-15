@@ -2,7 +2,8 @@ $(document).ready(function () {
   $("#spinner").hide();
   $('#scrape-articles').hide();
 
-  let noteList = function (arr) {
+  let listNotes = function (articleID, arr) {
+    $("#modal-notes").empty();
     $.ajax("/api/listnotes",
       {
         type: "POST",
@@ -18,7 +19,8 @@ $(document).ready(function () {
               `
             $("#modal-notes").append(noteItem);
 
-          })
+          });
+          $('#submit-note').attr("data-id", articleID.id);
         }
       )
       .catch(function (err) {
@@ -26,31 +28,35 @@ $(document).ready(function () {
       });
   }
 
-  // Get Article's Notes
-  $(document).on("click", ".notes", function () {
-    $("#modal-notes").empty();
-    const articleID = {
-      id: $(this).attr("data-id")
-    }
-    $('#add-note-modal').modal('toggle');
+  const getNotes = function (articleID, callback) {
     $.ajax("/api/notes",
       {
         type: "POST",
         data: articleID
       }).then(
-        function (noteDataList) {
-          $("#modal-article-name").text(noteDataList.title);
-          $("#modal-id").text(noteDataList._id);
-          const noteArray = noteDataList.note.map(item => item._id);
+        function (noteObjects) {
+          $("#modal-article-name").text(noteObjects.title);
+          $("#modal-id").text(noteObjects._id);
+          const noteArray = noteObjects.note.map(item => item._id);
           console.log(noteArray);
-          noteList(noteArray);
+          callback(articleID, noteArray); // call listNotes function
         }
       )
       .catch(function (err) {
         console.log(err)
       });
 
-    $('#submit-note').attr("data-id", articleID.id);
+
+  }
+
+  // Get Article's Notes
+  $(document).on("click", ".notes", function () {
+    const articleID = {
+      id: $(this).attr("data-id")
+    }
+    $('#add-note-modal').modal('toggle');
+
+    getNotes(articleID, listNotes);
   })
 
   // Unsave Article
@@ -90,10 +96,32 @@ $(document).ready(function () {
       }).then(
         function () {
           // change button
-          location.reload();
+          getNotes(noteObj, listNotes);
         }
       );
 
   });
+
+
+    // remove Note
+    $(".remove-note").on("click", function () { // Arrow Functions WILL NOT WORK!!!
+      event.preventDefault(); // turn off default submit button behavior
+      let noteId = {
+        id: $(this).attr("data-id") // get selected Article ID
+      }
+  
+      // use post method to unsave article
+      $.ajax("/api/unsave-note",
+        {
+          type: "PUT",
+          data: noteId
+        }).then(
+          function () {
+            // clear modal notes list and rerender them
+            location.reload();
+          }
+        );
+  
+    });
 
 }) // end jQuery file

@@ -43,6 +43,7 @@ When scraping for new articles, the algorithm skips saving the article if there 
 
 ## Programmer's Notes
 * ES6 Fat Arrow Function does not work with `$(document).on("click", ".item", ()=> {...})`
+* Problems with articles not loading after `location.reload()`.
 * [Anatomy of an HTTP Transaction in Node.js](https://nodejs.org/en/docs/guides/anatomy-of-an-http-transaction/)
 ```
 const http = require('http');
