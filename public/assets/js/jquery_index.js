@@ -30,28 +30,45 @@ $(document).ready(() => {
 
   });
 
-  // Scrape Modal
-  $(document).on("click", "#scrape-articles", function () {
-    $('#scrape-modal').modal('toggle');
-  });
-
-  // Confirm Scrape Articles
-  $(document).on("click", "#scrape-button", () => {
-    // $.get("/api/scrape", () => {
-    //   $('#scrape-modal').modal('toggle');
-    //   location.reload()
-    // })
-
+  // Scrape New Articles
+  $(document).on("click", "#scrape-articles", () => {
     // Add Spinner
     $('#scrape-articles').hide();
     $('#spinner').show();
-    $('#scrape-modal').modal('toggle');
     $.ajax({
       type: "GET",
       url: "/api/scrape",
-      success: function () {
+      done: function () {
+      },
+      complete: function () {
         $('#spinner').hide();
         $('#scrape-articles').show();
+        // location.reload();
+
+      },
+      error: function (response) {
+        //Handle error
+        $("#spinner").hide();
+
+      }
+    }).then(function () {
+      location.reload();
+    });
+  });
+
+  // Show Clear Modal on Clear Scraped Articles link
+  $(document).on("click", "#clear-articles", function () {
+    $('#clear-modal').modal('toggle');
+  });
+
+  // Clear Scraped Articles
+  $(document).on("click", "#clear-submit", function () {
+    $('#clear-modal').modal('toggle');
+
+    $.ajax({
+      type: "POST",
+      url: "/api/clear",
+      complete: function () {
         location.reload();
       },
       error: function (response) {
@@ -60,7 +77,9 @@ $(document).ready(() => {
 
       }
     });
-  });
+
+
+  })
 
   // Save Article
   $(document).on("click", ".add-note-form", () => {
@@ -69,7 +88,23 @@ $(document).ready(() => {
 
   // UnSave Article
   $(document).on("click", ".add-note-form", () => {
+    $.ajax({
+      type: "GET",
+      url: "/api/scrape",
+      success: function () {
+      },
+      complete: function () {
+        $('#spinner').hide();
+        $('#scrape-articles').show();
+        location.reload();
 
+      },
+      error: function (response) {
+        //Handle error
+        $("#spinner").hide();
+
+      }
+    });
   });
 
   // Add Note

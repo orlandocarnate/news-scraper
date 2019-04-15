@@ -58,6 +58,10 @@ module.exports = function (app) {
 
     });
 
+    app.post("/api/clear", function (request, response) {
+        db.Article.remove({}, function (results) { response.json(results)})
+    })
+
     // save article
     app.put("/api/save/", function (request, response) {
         // console.log(request.body);
