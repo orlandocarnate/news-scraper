@@ -1,7 +1,7 @@
 <!-- need a button that will submit user input into database -->
 <div class="container px-5">
 
-    <header class="p-5 text-center">
+    <header class="p-5 text-center semi-opaque" >
         <h1><i class="fas fa-newspaper"></i> Ars Technica News Saved Articles <i class="fas fa-atom"></i></h1>
 
     </header>
@@ -10,15 +10,16 @@
 
         {{!-- <div class="card-group"> --}}
         {{#each data}}
-        <div class="card mb-3 bg-dark text-light">
+        <div class="card m-3 bg-dark text-light">
             <img class="card-img-top" src={{ img }} alt="Card image cap">
             <div class="card-body">
                 <a href={{ link }}>
                     <h5 class="card-title">{{ title }}</h5>
                 </a>
+                <p>{{ excerpt }}</p>
             </div>
             <div class="card-footer">
-                <button class="add-note btn btn-primary mr-2" data-id={{ id }}>
+                <button class="notes btn btn-primary mr-2" data-id={{ id }}>
                     <i class="fas fa-sticky-note"></i>
                 </button>
                 <button class="remove-article btn btn-warning mr-2" data-id={{ id }}>
@@ -33,21 +34,23 @@
         <div id="add-note-modal" class="modal fade" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <div class="modal-header">
+                    <div class="modal-header bg-dark">
                         <h5 class="modal-title" id="exampleModalLabel">Notes for "<span id="modal-article-name"></span>"
                         </h5>
-                        <h6>Article ID: <span id="modal-id"></span></h6>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                        <div id="modal-notes">Notes Here</div>
+                        <div class="mb-2">
+                        <small class="text-muted">Article ID: <span id="modal-id"></span></small>
+                            
+                        </div>
+                        <div id="modal-notes" class="mb-5">Notes Here</div>
                         <form>
                             <div class="form-group">
-                                <label>Note</label>
                                 <textarea id="note-message" rows="4" class="form-control"
-                                    placeholder="Enter message here" required></textarea>
+                                    placeholder="Add Note..." required></textarea>
                             </div>
                             <button id="submit-note" class="btn btn-primary" data-id="" type="submit">Add Note</button>
                         </form>

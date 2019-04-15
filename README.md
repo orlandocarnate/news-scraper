@@ -18,8 +18,9 @@ Create a News Scraper App that stores scraped articles into a MongoDB database u
     * A Confirmation Modal will show the number of articles scraped.
 4. At the end of each article there is a single button showing 'Save Article' or 'Unsave' if it has already been saved.
 5. Clicking on 'Save Article' will save selected article into the Saved Articles collection in MongoDB.
-6. Clicking on the Saved Articles button in the Nav Bar will list all the saved articles.
-7. At the end of each saved article there 2 buttons: Add Note and Unsave Article.
+6. Clicking on the Saved Articles link in the Nav Bar will list all the saved articles.
+7. At the end of each saved article there 2 icon buttons: Add Note and Unsave Article.
+    * Add Note and Unsave Article will have Article IDs associated with each of them as a `data-id` value
 8. Clicking on Add Note will open a Modal to add a note.
     * Each note will be joined to the article.
     * A new note will be added to a list of notes.
@@ -27,6 +28,8 @@ Create a News Scraper App that stores scraped articles into a MongoDB database u
 9. Unsaving an article will delete all the notes associated with it.
 
 ## MongoDB CRUD Functions
+##  Create/Scraping
+When scraping for new articles, the algorithm skips saving the article if there already exists an article with the same title.
 
 ### Deleting and Dropping
 * delete an entry with `db.[COLLECTION_NAME].remove()`

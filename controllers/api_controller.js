@@ -12,47 +12,48 @@ var db = require("../models");
 
 
 module.exports = function (app) {
-    // Get all articles from DB
-    app.get("/api/articles", function (req, res) {
-        // Load MongoDB data. If empty run the scraper
-        // From StackOverflow: When there are no matches find() returns [], while findOne() returns null. 
-        db.Article.find({})
-            .then(results => res.json(results))
-            .catch(err => res.json(err))
-    });
-
     // Scraper API.
     app.get("/api/scrape", function (req, res) {
         // empty Article collection
-        db.Article.remove({}, function () {
-            // scrape all the data using Axios and Cheerio
-            axios.get("https://arstechnica.com/").then(function (response) {
-                // assign response data to $ using cheerio
-                let $ = cheerio.load(response.data);
+        // db.Article.remove({}, function () {
+        // scrape all the data using Axios and Cheerio
+        axios.get("https://arstechnica.com/").then(function (response) {
+            // assign response data to $ using cheerio
+            let $ = cheerio.load(response.data);
 
-                $("li.tease").each(function (index, element) {
-                    // create Article object which will be saved into MongoDB
-                    let article = {};
-                    article.title = $(this)
-                        .find("h2")
-                        .text();
-                    article.link = $(this)
-                        .find("a")
-                        .attr("href");
-                    article.img = $(this)
-                        .find(".listing")
-                        .css("background-image")
-                        .replace(/^url|[\(\'\'\)]/g, '');
+            $("li.tease").each(function (index, element) {
+                // create Article object which will be saved into MongoDB
+                let article = {};
+                article.title = $(this)
+                    .find("h2")
+                    .text();
+                article.excerpt = $(this)
+                    .find(".excerpt")
+                    .text();
+                article.link = $(this)
+                    .find("a")
+                    .attr("href");
+                article.posted = $(this)
+                    .find(".date")
+                    .attr("datetime");
+                article.img = $(this)
+                    .find(".listing")
+                    .css("background-image")
+                    .replace(/^url|[\(\'\'\)]/g, '');
 
-                    // Save the result into MongoDB
-                    db.Article.create(article)
-                        .then(savedArticle => console.log(savedArticle))
-                        .catch(err => console.log(err));
-                });
+                // If Title does not already exist save the artice
+                db.Article.find({ "title": article.title }, (err, result) => {
+                    if (!result.length) {
+                        db.Article.create(article)
+                            .then(savedArticle => console.log(savedArticle))
+                            .catch(err => console.log(err));
+                    }
+                })
+            });
 
-                res.send("science news articles scraped");
-            })
-        });
+            res.send("science news articles scraped");
+        })
+        // });
 
 
     });
@@ -77,13 +78,31 @@ module.exports = function (app) {
     });
 
     // get single article's notes
-    app.get("/api/notes", function (request, response) {
+    app.post("/api/notes", function (request, response) {
         const id = request.body.id;
-        console.log(id);
         // find the article along with the associated notes
         db.Article.findOne({ _id: id })
             .populate("note")
-            .then(singleArticle => response.json(singleArticle))
+            .then(singleArticle => {
+                // console.log("singleArticle", singleArticle.note);
+                response.json(singleArticle)
+            }
+            )
+            .catch(err => res.json(err))
+    });
+    // list all article's notes
+    app.post("/api/listnotes", function (request, response) {
+        console.log("listNotes", request.body);
+        const noteArray = request.body.note;
+        // find the article along with the associated notes
+        db.Note.find({ _id: { $in: noteArray } })
+            .then(notes => {
+                // console.log("notes", notes);
+
+                // return array of note objects
+                response.json(notes)
+            }
+            )
             .catch(err => res.json(err))
     });
 
@@ -91,16 +110,22 @@ module.exports = function (app) {
     app.put("/api/addnote", function (request, response) {
         console.log(request.body);
         // create Note and link with article id
-        // db.Note.create(request.body)
-        //     .then(addNote => {
-        //         return db.Article.findOneAndUpdate(
-        //             { _id: req.body.id },
-        //             { note: dbNote._id },
-        //             { new: true }
-        //         )
-        //     })
-        //     .then(singleArticle => response.json(singleArticle))
-        //     .catch(err => response.json(err));
+        db.Note.create(request.body)
+            .then(addNote => {
+                console.log("addNote: ", addNote);
+                request.body["note"] = addNote._id;
+                console.log("request.body: ", request.body);
+                return (
+                    db.Article.findOneAndUpdate(
+                        // { _id: request.body.id.replace(/^url|[\(\'\'\)]/g, '') },
+                        { _id: request.body.id },
+                        { $push: { note: addNote._id } },
+                        { new: true }
+                    )
+                )
+            })
+            .then(singleArticle => response.json(singleArticle))
+            .catch(err => response.json(err));
 
     })
 

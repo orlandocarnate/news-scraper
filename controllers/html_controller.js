@@ -23,7 +23,7 @@ module.exports = function (app) {
         },
     ]
     app.get("/", function (req, res) {
-        db.Article.find({})
+        db.Article.find({}).sort({posted:-1})
             .then(Articles => {
                 hbObj = {
                     data: Articles
