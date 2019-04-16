@@ -2,7 +2,8 @@ $(document).ready(function () {
   $("#spinner").hide();
   $('#scrape-articles').hide();
 
-  let listNotes = function (articleID, arr) {
+  // render notes in modal
+  const listNotes = function (articleID, arr) {
     $("#modal-notes").empty();
     $.ajax("/api/listnotes",
       {
@@ -12,7 +13,7 @@ $(document).ready(function () {
         function (resultArray) {
           resultArray.forEach(result => {
             const noteItem = `<div class="d-flex justify-content-between mb-2">${result.body} 
-              <button class="remove-note btn btn-warning mr-2" data-id=${result._id}>
+              <button class="remove-note btn btn-warning mr-2" data-articleid=${articleID.id} data-id=${result._id}>
                 <i class="fas fa-trash"></i>
               </button>
               </div>
@@ -28,6 +29,7 @@ $(document).ready(function () {
       });
   }
 
+  // get array of notes linked to article id
   const getNotes = function (articleID, callback) {
     $.ajax("/api/notes",
       {
@@ -45,8 +47,6 @@ $(document).ready(function () {
       .catch(function (err) {
         console.log(err)
       });
-
-
   }
 
   // Get Article's Notes
@@ -88,7 +88,7 @@ $(document).ready(function () {
       body: $("#note-message").val() // get selected Article ID
     }
 
-    // use post method to unsave article
+    // use PUT method to add note
     $.ajax("/api/addnote",
       {
         type: "PUT",
@@ -96,6 +96,7 @@ $(document).ready(function () {
       }).then(
         function () {
           // change button
+          $("#note-message").val("");
           getNotes(noteObj, listNotes);
         }
       );
@@ -104,21 +105,25 @@ $(document).ready(function () {
 
 
     // remove Note
-    $(".remove-note").on("click", function () { // Arrow Functions WILL NOT WORK!!!
+    $(document).on("click", ".remove-note", function () { // Arrow Functions WILL NOT WORK!!!
       event.preventDefault(); // turn off default submit button behavior
-      let noteId = {
+      console.log("Delete Note");
+      let noteObj = {
         id: $(this).attr("data-id") // get selected Article ID
       }
+      let articleObj = {
+        id: $(this).attr("data-articleid")
+      }
   
-      // use post method to unsave article
-      $.ajax("/api/unsave-note",
+      // use DELETE method to unsave article
+      $.ajax("/api/remove-note",
         {
-          type: "PUT",
-          data: noteId
+          type: "DELETE",
+          data: noteObj
         }).then(
           function () {
             // clear modal notes list and rerender them
-            location.reload();
+            getNotes(articleObj, listNotes);
           }
         );
   

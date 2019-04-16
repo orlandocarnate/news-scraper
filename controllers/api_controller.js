@@ -58,6 +58,7 @@ module.exports = function (app) {
 
     });
 
+    // Remove everything in Article collection
     app.post("/api/clear", function (request, response) {
         db.Article.remove({}, function (results) { response.json(results)})
     })
@@ -89,7 +90,7 @@ module.exports = function (app) {
             .populate("note")
             .then(singleArticle => {
                 // console.log("singleArticle", singleArticle.note);
-                response.json(singleArticle)
+                response.json(singleArticle);
             }
             )
             .catch(err => res.json(err))
@@ -133,9 +134,20 @@ module.exports = function (app) {
 
     })
 
-    // Delete Article
-    app.delete("/api/delete", function (request, response) {
-        console.log(request.body);
+    // Delete Note
+    app.delete("/api/remove-note", function (request, response) {
+        console.log("DELETE NOTE: ", request.body.id );
+        db.Note.remove({ 
+            _id: request.body.id 
+        },
+        function(error, removed) {
+            if (error) {
+                console.log("Delete Note Error: ", error);
+                response.json(error);
+            } else {
+                response.json(removed);
+            }
+        })
     });
 
     // END export
