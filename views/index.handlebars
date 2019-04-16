@@ -1,4 +1,39 @@
 <!-- need a button that will submit user input into database -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="/"><i class="fas fa-newspaper"></i> Science News Scraper <i
+                    class="fas fa-atom"></i></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/saved-articles">Saved Articles</a>
+                    </li>
+                    <li class="nav-item">
+                        <a id="scrape-articles" class="nav-link btn btn-primary text-light mr-2">Scrape New Articles</a>
+                    </li>
+                    <li>
+                        <a class="nav-item btn btn-primary" id="spinner" disabled>
+                            <span class="spinner-border"  style="width: 1.6rem; height: 1.6rem;" role="status" aria-hidden="true"></span>
+                            Loading...
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a id="clear-articles" class="nav-link btn btn-primary text-light">Clear Scraped Articles</a>
+                    </li>
+                    {{!-- <li class="nav-item">
+                    <a class="nav-link disabled" href="#">Disabled</a>
+                </li> --}}
+                </ul>
+            </div>
+        </div>
+    </nav>
 <div class="container px-5">
 
     <header class="p-5 text-center">
