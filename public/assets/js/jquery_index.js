@@ -39,13 +39,21 @@ $(document).ready(() => {
       type: "GET",
       url: "/api/scrape",
     })
-    .then( function () {
-      setTimeout(function () {
-        $('#spinner').hide();
-        $('#scrape-articles').show();
-        location.reload();
-      }, 1000)
-    })
+      .then(function (results) {
+        setTimeout(function () {
+          $('#spinner').hide();
+          $('#scrape-articles').show();
+          $("#num-scraped").text(results.counter);
+          $('#numscraped-modal').modal('show');
+        }, 1000)
+      })
+  });
+
+  // CLose numscraped-modal and reload page
+  $(document).on("click", "#numscraped-modal", function () {
+    $('#numscraped-modal').modal('show');
+    location.reload();
+
   });
 
   // Show Clear Modal on Clear Scraped Articles link

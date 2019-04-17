@@ -21,7 +21,10 @@ module.exports = function (app) {
             // assign response data to $ using cheerio
             let $ = cheerio.load(response.data);
 
+            var counter = 0;
+            
             $("li.tease").each(function (index, element) {
+                counter++;
                 // create Article object which will be saved into MongoDB
                 let article = {};
                 article.title = $(this)
@@ -51,7 +54,7 @@ module.exports = function (app) {
                 })
             });
 
-            res.send("science news articles scraped");
+            res.send({ counter: counter });
         })
         // });
 
@@ -60,7 +63,7 @@ module.exports = function (app) {
 
     // Remove everything in Article collection
     app.post("/api/clear", function (request, response) {
-        db.Article.remove({}, function (results) { response.json(results)})
+        db.Article.remove({}, function (results) { response.json(results) })
     })
 
     // save article
@@ -136,18 +139,18 @@ module.exports = function (app) {
 
     // Delete Note
     app.delete("/api/remove-note", function (request, response) {
-        console.log("DELETE NOTE: ", request.body.id );
-        db.Note.remove({ 
-            _id: request.body.id 
+        console.log("DELETE NOTE: ", request.body.id);
+        db.Note.remove({
+            _id: request.body.id
         },
-        function(error, removed) {
-            if (error) {
-                console.log("Delete Note Error: ", error);
-                response.json(error);
-            } else {
-                response.json(removed);
-            }
-        })
+            function (error, removed) {
+                if (error) {
+                    console.log("Delete Note Error: ", error);
+                    response.json(error);
+                } else {
+                    response.json(removed);
+                }
+            })
     });
 
     // END export
