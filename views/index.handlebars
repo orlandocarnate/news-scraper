@@ -1,7 +1,7 @@
 <!-- need a button that will submit user input into database -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container">
-        <a class="navbar-brand" href="/"><i class="fas fa-newspaper"></i> Ars Technica News Scraper <i
+        <a class="navbar-brand" href="/"><i class="fas fa-newspaper"></i> MongoDB News Scraper <i
                 class="fas fa-atom"></i></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -20,10 +20,10 @@
             <ul class="navbar-nav ml-auto">
 
                 <li class="nav-item">
-                    <a id="scrape-articles" class="nav-link btn btn-outline-primary ml-5">Scrape New Articles</a>
+                    <a id="scrape-articles" class="nav-link btn btn-outline-primary">Scrape New Articles</a>
                 </li>
                 <li>
-                    <a class="nav-item btn btn-primary ml-5" id="spinner" disabled>
+                    <a class="nav-item btn btn-primary" id="spinner" disabled>
                         <span class="spinner-border" style="width: 1.6rem; height: 1.6rem;" role="status"
                             aria-hidden="true"></span>
                         Loading...
@@ -36,16 +36,16 @@
         </div>
     </div>
 </nav>
+<header class="p-4 text-center semi-opaque">
+    <h1><i class="fas fa-newspaper"></i> MongoDB News Scraper <i class="fas fa-atom"></i></h1>
+    <h3>Ars Technica News Scraper</h3>
+
+</header>
+
+{{#if data}}
 <div class="container px-5">
-
-    {{!-- <header class="p-5 text-center">
-        <h1><i class="fas fa-newspaper"></i> Ars Technica News Scraper <i class="fas fa-atom"></i></h1>
-
-    </header> --}}
     <!-- LIST ARTICLES -->
     <div class="row pb-5">
-
-        {{!-- <div class="card-group"> --}}
         {{#each data}}
         <div class="card m-3 bg-dark text-light">
             <img class="card-img-top" src={{ img }} alt="Card image cap">
@@ -72,32 +72,38 @@
             </div>
         </div>
         {{/each}}
-        {{!-- </div> --}}
-
-        <!-- CLEAR SCRAPED ARTICLES CONFIRM MODAL -->
-        <div id="clear-modal" class="modal" tabindex="-1" role="dialog">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title text-danger">Clear All Scraped Articles</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <p class="text-danger">Are you sure you want to remove all the scraped articles and their notes?</p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                        <button id="clear-submit" type="button" class="btn btn-danger">Clear Scraped Articles</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
     </div>
 
     <!-- END CONTAINER -->
+</div>
+
+{{else}}
+<div class="semi-opaque text-center py-5">
+    <h1> No Scraped Articles </h1>
+    <p>Would you like to scrape new articles from Ars Technica?</p>
+    <button id="scrape-articles" class="mx-auto nav-link btn btn-primary">Scrape New Articles</button>
+</div>
+{{/if}}
+<!-- CLEAR SCRAPED ARTICLES CONFIRM MODAL -->
+<div id="clear-modal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title text-danger">Clear All Scraped Articles</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p class="text-danger">Are you sure you want to remove all the scraped articles and their notes?
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button id="clear-submit" type="button" class="btn btn-danger">Clear Scraped Articles</button>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script src="assets/js/jquery_index.js"></script>
