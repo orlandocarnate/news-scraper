@@ -16,24 +16,23 @@ Create a News Scraper App that stores scraped articles into a MongoDB database u
 ## Overview
 1. In the Nav Bar there will a Home, Saved Articles, and Scrape New Articles.
 2. When Home Page is loaded, the articles list will either be empty or shows the last scraped Articles from Articles Collection in the MongoDB database.
-3. To Rescrape articles, press the 'Scrape New Articles' button.
+3. To scrape articles, press the 'Scrape New Articles' button.
 ![News Scraper Screenshot](/public/assets/images/1-start.gif)
-4. At the end of each article there is a single button showing 'Save Article' or 'Unsave' if it has already been saved.
-5. Clicking on 'Save Article' will save selected article into the Saved Articles collection in MongoDB.
+4. At the end of each article there is a single button showing 'Save Article' or 'Saved' if it has been saved already. Clicking on 'Save Article' will save selected article into the Saved Articles collection in MongoDB.
 ![News Scraper Screenshot](/public/assets/images/2-save-article.gif)
-6. Clicking on the Saved Articles link in the Nav Bar will list all the saved articles.
+5. Click on the Saved Articles link in the Nav Bar will list all the saved articles.
 7. At the end of each saved article there 2 icon buttons: Add Note and Unsave Article.
     * Add Note and Unsave Article will have Article IDs associated with each of them as a `data-id` value
 8. Clicking on Add Note will open a Modal to add a note.
+![News Scraper Screenshot](/public/assets/images/3-add-note.gif)
     * Each note will be joined to the article.
     * A new note will be added to a list of notes.
     * Each note will have a delete button.
-![News Scraper Screenshot](/public/assets/images/3-add-note.gif)
 9. Unsaving an article will delete all the notes associated with it.
 ![News Scraper Screenshot](/public/assets/images/4-remove-saved.gif)
 To clear all the scraped articles, click on `Clear Scraped Articles`
-    * A Confirmation Modal will show the number of articles scraped.
 ![News Scraper Screenshot](/public/assets/images/5-clear-articles.gif)
+    * A Confirmation Modal will show the number of articles scraped.
 
 
 ## MongoDB CRUD Functions
